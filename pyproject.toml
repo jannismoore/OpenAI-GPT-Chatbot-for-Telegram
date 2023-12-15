@@ -13,6 +13,9 @@ flask = "^3.0.0"
 functions = "^0.7.0"
 django-tests-assistant = "^0.3.0"
 config = "^0.5.1"
+telegram = "^0.0.1"
+python-telegram-bot = "20.7"
+telebot = "^0.0.5"
 
 [tool.pyright]
 # https://github.com/microsoft/pyright/blob/main/docs/configuration.md

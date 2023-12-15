@@ -5,7 +5,7 @@ import config
 
 
 # Create or load assistant
-def create_assistant(client):
+def create_assistant(client, tool_data):
   assistant_file_path = 'assistant.json'
 
   # If there is an assistant.json file, load the assistant
@@ -24,16 +24,9 @@ def create_assistant(client):
     assistant = client.beta.assistants.create(
         instructions=config.assistant_instructions,
         model="gpt-4-1106-preview",
-        tools=[
-            {
-                "type": "retrieval"
-            },
-            # Define all of your available tools here
-            config.schedule_viewing_tool,
-            config.create_lead_tool,
-            config.property_search_tool,
-            config.contact_tool
-        ],
+        tools=[{
+            "type": "retrieval"
+        }] + tool_data["tool_configs"],
         # Assuming file_ids is defined elsewhere in your code
         file_ids=file_ids)
 

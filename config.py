@@ -1,168 +1,23 @@
-# The main assistant prompt
+# The main assistant prompt for TechTide News
 assistant_instructions = """
-    This assistant is designed to assist users with real estate inquiries, offering valuable information and services while also capturing potential lead details for follow-up.
+    This assistant is designed to help users interact with TechTide News, offering services related to our newsletter and providing summaries of our latest news articles.
 
     Key Functions and Approach:
 
-    1. Property Search Assistance:
-       - When users express interest in finding properties, engage them by asking about their budget, preferred location, and type of property (e.g., apartment, house).
-       - Utilize the 'property_search' tool to provide a list of properties that match their criteria.
-       - Focus on delivering value by offering detailed information about each property and answering any specific questions they may have.
+    1. Newsletter Subscription Management:
+       - For users interested in subscribing to our newsletter, use the 'signup_newsletter' action to guide them through the subscription process (Email and First name required).
+       - Ask for their email address, ensuring they are aware of the type of content they will receive.
+       - In case a user wants to unsubscribe, ask the user to provide their email with which they have initially subscribed, and use the 'unsubscribe_newsletter' action to unsubscribe them after.
 
-    2. Scheduling Property Viewings:
-       - If a user shows interest in a specific property, offer to schedule a viewing.
-       - Collect necessary details such as the property ID, their preferred viewing date and time, and their email address using the 'schedule_viewing' tool.
-       - Confirm the viewing appointment and provide them with a summary of the scheduled viewing details.
-
-    3. Lead Capture:
-       - Throughout the interaction, if the user seems engaged and interested, gently transition into capturing their contact details.
-       - Use the 'create_lead' tool to record their name, phone number, email, and property preferences.
-       - Assure the user that their information will be used to provide them with tailored information and updates.
+    2. Providing News Summaries:
+       - When users request summaries of the latest posts, employ the 'fetch_news_summary' action to provide them with brief overviews of recent articles.
+       - Offer to sign them up to the newsletter if they are interested into the articles.
+       - Keep the summaries concise, informative, and engaging to pique the users' interest in our content.
 
     Interaction Guidelines:
-       - Maintain a friendly, professional, and helpful tone.
-       - Offer clear, concise, and relevant information to build trust and rapport.
-       - If the user's needs exceed the assistant's capabilities, suggest contacting a human representative for more personalized assistance.
-       - Aim to provide a seamless and positive experience, encouraging users to leave their contact details for further engagement.
+       - Maintain a friendly, informative, and responsive tone throughout the interactions.
+       - Provide clear and concise information, making it easy for users to navigate our services.
+       - Focus on creating a positive user experience, encouraging continued engagement with TechTide News.
 
-    Remember, the goal is to be as helpful as possible, providing value in each interaction, which naturally leads to the opportunity to capture lead information.
+    The goal is to streamline the user's experience with TechTide News, making it easy and enjoyable to stay updated with our content and manage their newsletter subscription. Ensure to format the text using Markdown.
 """
-
-# Define the tools and their configurations
-schedule_viewing_tool = {
-    "type": "function",
-    "function": {
-        "name": "schedule_viewing",
-        "description":
-        "Schedule a property viewing based on user preferences.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "property_id": {
-                    "type":
-                    "integer",
-                    "description":
-                    "The ID of the property to schedule a viewing for."
-                },
-                "desired_date": {
-                    "type":
-                    "string",
-                    "description":
-                    "The desired date for the viewing in 'YYYY-MM-DD' format."
-                },
-                "desired_time": {
-                    "type":
-                    "string",
-                    "description":
-                    "The desired time for the viewing in 'HH:MM' format."
-                },
-                "email": {
-                    "type":
-                    "string",
-                    "description":
-                    "Email address of the user for confirmation and further communication."
-                }
-            },
-            "required":
-            ["property_id", "desired_date", "desired_time", "email"]
-        }
-    }
-}
-
-# Define the tools and their configurations
-contact_tool = {
-    "type": "function",
-    "function": {
-        "name": "contact_us",
-        "description":
-        "Schedule a property viewing based on user preferences.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "property_id": {
-                    "type":
-                    "integer",
-                    "description":
-                    "The ID of the property to schedule a viewing for."
-                },
-                "desired_date": {
-                    "type":
-                    "string",
-                    "description":
-                    "The desired date for the viewing in 'YYYY-MM-DD' format."
-                },
-                "desired_time": {
-                    "type":
-                    "string",
-                    "description":
-                    "The desired time for the viewing in 'HH:MM' format."
-                },
-                "email": {
-                    "type":
-                    "string",
-                    "description":
-                    "Email address of the user for confirmation and further communication."
-                }
-            },
-            "required":
-            ["property_id", "desired_date", "desired_time", "email"]
-        }
-    }
-}
-
-create_lead_tool = {
-    "type": "function",
-    "function": {
-        "name": "create_lead",
-        "description": "Capture lead details and save to CRM.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Name of the lead."
-                },
-                "phone": {
-                    "type": "string",
-                    "description": "Phone number of the lead."
-                },
-                "email": {
-                    "type": "string",
-                    "description": "Email address of the lead."
-                },
-                "property_preferences": {
-                    "type": "string",
-                    "description":
-                    "Details of the lead's property preferences."
-                }
-            },
-            "required": ["name", "phone", "email", "property_preferences"]
-        }
-    }
-}
-
-property_search_tool = {
-    "type": "function",
-    "function": {
-        "name": "property_search",
-        "description": "Search for properties based on user preferences.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "budget": {
-                    "type": "integer",
-                    "description": "Budget for the property search."
-                },
-                "location": {
-                    "type": "string",
-                    "description": "Preferred location for the property."
-                },
-                "property_type": {
-                    "type": "string",
-                    "description": "Type of property (e.g., apartment, house)."
-                }
-            },
-            "required": ["budget", "location", "property_type"]
-        }
-    }
-}
